@@ -34,6 +34,7 @@ class TimeSimmer {
     this._startedAt = startedAt;
     this._cycle = cycle;
     this._kickoff = startedAt;
+    this._allTime = 0;
     if (immediate) this.start();
   }
 
@@ -89,6 +90,11 @@ class TimeSimmer {
     return this._time;
   }
 
+  // keeps time without resetting on cycle
+  get allTime() { 
+    return this._allTime
+  }
+
   // how many times the ticker has ticked
   get ticker() {
     return this._ticker;
@@ -110,6 +116,7 @@ class TimeSimmer {
       cycle: this.cycle,
       kickoff: this.kickoff,
       tickRate: this.tickRate,
+      allTime: this.allTime
     };
   }
 
@@ -127,7 +134,8 @@ class TimeSimmer {
       this.time += this.rate * this._tickRate;
       this._ticker++;
     }
-
+    this._allTime += this.rate * this._tickRate;
+    
     // tick before recycling
     this._events.tick.forEach((func) => {
       func({

@@ -96,7 +96,7 @@ A simPack is retured as an event payload
 | kickoff | the original startedAt time. It will be equal to startedAt if cycle is 0 |
 | tickRate | how often the time is updated in ms |
 | eventName | the event |
-
+| allTime | the sim time passed since instanciation |
 
 ## properties
 A simPack (described earlier) is a collection of properties returned in a single object. Each can also be set (except date & ticker ) or get individually, for example

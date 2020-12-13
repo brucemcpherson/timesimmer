@@ -3,10 +3,10 @@
     "type": "git",
     "url": "https://github.com/brucemcpherson/timesimmer"
   },
-  "name": "qottle",
+  "name": "timesimmer",
   "author": "bruce mcpherson",
   "description": "Handles simulated time running at a different rate to real time",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "devDependencies": {
     "ava": "^3.13.0"
   },
