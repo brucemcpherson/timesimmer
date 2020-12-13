@@ -1,0 +1,18 @@
+{
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brucemcpherson/timesimmer"
+  },
+  "name": "qottle",
+  "author": "bruce mcpherson",
+  "description": "Handles simulated time running at a different rate to real time",
+  "version": "1.0.0",
+  "devDependencies": {
+    "ava": "^3.13.0"
+  },
+  "scripts": {
+		"test": "ava"
+  },
+  "license": "MIT",
+  "main": "src/timesimer.js"
+}
