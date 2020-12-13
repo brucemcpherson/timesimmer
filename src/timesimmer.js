@@ -17,10 +17,11 @@ class TimeSimmer {
     startedAt = new Date().getTime(),
     tickRate = 1000,
     immediate = true,
-    cycle = 0,
+    cycle = 0
   } = {}) {
     // the istartAt is when the time should start at default is now
     // rate is the rate at which the sim runs so by default we run at 1sec = 1min with a rate of 60
+
     this._rate = rate;
     this._time = startedAt;
     this._events = {
@@ -122,7 +123,7 @@ class TimeSimmer {
 
   // set the simmed time to some new value
   set time(value) {
-    this._time = value || new Date();
+    this._time = value;
   }
 
   // this is called on every tick
@@ -135,7 +136,7 @@ class TimeSimmer {
       this._ticker++;
     }
     this._allTime += this.rate * this._tickRate;
-    
+
     // tick before recycling
     this._events.tick.forEach((func) => {
       func({

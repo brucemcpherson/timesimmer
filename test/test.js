@@ -81,10 +81,10 @@ test("test events and time update and rate change", (t) => {
 test("test cycle", (t) => {
   const now = new Date().getTime();
   const s = new TimeSimmer({
-    // speed up time so 1 second = 10 minutes
-    rate: 60 * 10,
+    // speed up time so 1 second = 1 hour 
+    rate: 60 * 60,
     // tick every second
-    tickRate: 1000,
+    tickRate: 10000,
     startedAt: now,
     // restart time every hour
     cycle: 60 * 60 * 1000
@@ -92,14 +92,12 @@ test("test cycle", (t) => {
   t.is(s.isTicking, true);
   return new Promise((resolve) =>
     s.on("tick", (simPack) => {
-      console.log(simPack)
       const { time, rate, ticker, startedAt, eventName, date } = simPack;
       t.is(time, s.tickRate * s.rate * s.ticker + now);
       t.is(eventName, "tick");
       t.is(startedAt, now);
       t.is(date.getTime(), s.tickRate * rate * s.ticker + now);
     }).on("cycle", simPack => {
-      console.log(simPack);
       const { time, rate, ticker, startedAt, eventName, date } = simPack;
       t.is(time, s.kickoff);
       t.is(eventName, "cycle");
@@ -111,3 +109,46 @@ test("test cycle", (t) => {
     })
   )
 });
+
+
+test("test cycle 2", (t) => {
+  const now = 0;
+  const s = new TimeSimmer({
+    // update the simtime every 2 seconds
+    tickRate: 2000,
+    // 1 day every minute
+    rate: 60 * 60 * 24,
+    // we start at time 0
+    startedAt: now,
+    // cycle because the schedule is 1 week
+    cycle: 1000 * 60 * 60 * 24 * 7,
+    immediate: false
+  });
+  t.is(s.isTicking, false);
+  s.start()
+  return new Promise((resolve) =>
+    s.on("tick", (simPack) => {
+
+      const { time, rate, ticker, startedAt, eventName, date } = simPack;
+      t.is(typeof time, "number");
+      t.is(time, s.tickRate * s.rate * s.ticker + now);
+      t.is(eventName, "tick");
+      t.is(startedAt, now);
+      t.is(date.getTime(), s.tickRate * rate * s.ticker + now);
+    }).on("cycle", simPack => {
+
+      const { time, rate, ticker, startedAt, eventName, date } = simPack;
+      t.is(typeof time, 'number')
+      t.is(time, s.kickoff);
+      t.is(eventName, "cycle");
+      t.is(startedAt, now);
+      t.is(startedAt, s.kickoff);
+      t.is(ticker, 0);
+      t.is(date.getTime(),  now);
+      resolve(simPack);
+    })
+  )
+});
+
+
+
