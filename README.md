@@ -44,20 +44,7 @@ const s = new TimeSimmer({
 ## Cycling
 
 Normally time is counted from the startedAt option (or now by default). For some use cases, it's possible that the time cycles within a given period (for example a weekly schedule), so you can use the cycle option to say at what point to reset the time back to the startedAt value
-    this._rate = rate;
-    this._time = startedAt;
-    this._events = {
-      tick: [],
-      cycle: []
-    };
-    this._ticking = false;
-    this._ticker = 0;
-    this._interval = null;
-    this._tickRate = tickRate;
-    this._startedAt = startedAt;
-    this._cycle = cycle;
-    this._kickoff = startedAt;
-    if (autoStart) this.start();
+
 
 ## Options
 Most options can be applied when the timer is initialized, or set while the timer is running
