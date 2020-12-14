@@ -1,6 +1,7 @@
 const test = require("ava");
 const TimeSimmer = require("../src/timesimmer");
-
+const floatEqual = require("float-equal");
+const {ms} = TimeSimmer
 const LEEWAY = 100;
 
 test("init time starts at zero", (t) => {
@@ -110,18 +111,30 @@ test("test cycle", (t) => {
   )
 });
 
+test('ms', t => { 
+  // might get some rounding errors
+  t.is(ms('seconds', ms('msSeconds')), 1)
+  t.is(ms('minutes', ms("msMinutes")), 1)
+  t.is(floatEqual(ms("hours", ms("msHours")), 1), true)
+  t.is(ms("days", ms("msDays")), 1);
+  t.is(ms("weeks", ms("msWeeks")), 1);
+  t.is(ms("weeks"), ms('days', 7));
+  t.is(ms("hours"), ms("minutes", 60));
+  t.is(ms("minutes"), ms("seconds", 60));
+})
 
 test("test cycle 2", (t) => {
   const now = 0;
+
   const s = new TimeSimmer({
     // update the simtime every 2 seconds
-    tickRate: 2000,
-    // 1 day every minute
-    rate: 60 * 60 * 24,
+    tickRate: ms('seconds', 2),
+    // 12 hours every second
+    rate: 12 * 60 * 60,
     // we start at time 0
     startedAt: now,
-    // cycle because the schedule is 1 week
-    cycle: 1000 * 60 * 60 * 24 * 7,
+    // cycle restarts every week
+    cycle: ms('weeks'),
     immediate: false
   });
   t.is(s.isTicking, false);
@@ -135,16 +148,19 @@ test("test cycle 2", (t) => {
       t.is(eventName, "tick");
       t.is(startedAt, now);
       t.is(date.getTime(), s.tickRate * rate * s.ticker + now);
+     
     }).on("cycle", simPack => {
-
-      const { time, rate, ticker, startedAt, eventName, date } = simPack;
+      
+      const { time, rate, ticker, startedAt, eventName, date , allTime} = simPack;
+      t.is(ms("msHours", allTime), 7 * 24, '1 weeks worth');
       t.is(typeof time, 'number')
       t.is(time, s.kickoff);
       t.is(eventName, "cycle");
       t.is(startedAt, now);
       t.is(startedAt, s.kickoff);
       t.is(ticker, 0);
-      t.is(date.getTime(),  now);
+      t.is(date.getTime(), now);
+      
       resolve(simPack);
     })
   )

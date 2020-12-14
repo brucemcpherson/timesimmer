@@ -701,6 +701,11 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+float-equal@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/float-equal/-/float-equal-2.0.0.tgz#fa5d71ef97cd71e6c4e099b559e64d76071e85fe"
+  integrity sha512-bvk+utmmBALVvuqvomV16UnfQkouFfCuMInVOykvttQB+uQyca/s5lghm94aqimUiwuTfAqyRAsT0a0iQY2gww==
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
