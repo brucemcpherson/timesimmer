@@ -6,7 +6,7 @@
   "name": "timesimmer",
   "author": "bruce mcpherson",
   "description": "Handles simulated time running at a different rate to real time",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "devDependencies": {
     "ava": "^3.13.0",
     "float-equal": "^2.0.0"
@@ -15,5 +15,10 @@
     "test": "ava"
   },
   "license": "MIT",
-  "main": "src/timesimer.js"
+  "main": "./src/timesimmer.js",
+  "module": "./src/timesimmer.js",
+  "exports": {
+    "require": "./src/timesimmer.js",
+    "import": "./src/timesimmer.js"
+  }
 }

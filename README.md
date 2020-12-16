@@ -99,7 +99,8 @@ A simPack is retured as an event payload
 | allTime | the sim time passed since instanciation |
 | realTimeStartedAt | when it actually started |
 | realTimeElapsed | how long its been running for in real time |
-| carryFowardOnCycle | whether to carry forward any excess elapsed time when a recycle happens |
+| carryFowardOnCycle | whether to carry forward any excess sim time when a recycle happens |
+| date | the sim time as a date |
 
 ## properties
 

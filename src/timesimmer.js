@@ -19,13 +19,13 @@ class TimeSimmer {
     immediate = true,
     cycle = 0,
     // this one is to carry forward time already passed on a recycle
-    carryForwardOnCycle = false
+    carryForwardOnCycle = false,
   } = {}) {
     // the istartAt is when the time should start at default is now
     // rate is the rate at which the sim runs so by default we run at 1sec = 1min with a rate of 60
-    this._realTimeStartedAt = new Date().getTime()
+    this._realTimeStartedAt = new Date().getTime();
     if (typeof startedAt === typeof undefined || startedAt === null)
-      startedAt = this._realTimeStartedAt
+      startedAt = this._realTimeStartedAt;
     this._carryForwardOnCycle = carryForwardOnCycle;
     this._rate = rate;
     this._time = startedAt;
@@ -45,26 +45,27 @@ class TimeSimmer {
   }
 
   static ms(name, value = 1) {
-    const seconds = 1000
-    const minutes = seconds * 60
-    const hours = minutes * 60
-    const days = hours * 24
-    const weeks = days * 7
-    return {
-      // convert into ms from these
-      seconds,
-      minutes,
-      hours,
-      days,
-      weeks,
-      // convert from ms to these
-      msSeconds: 1/seconds,
-      msMinutes: 1/minutes,
-      msHours: 1/hours,
-      msDays: 1/days,
-      msWeeks: 1 / weeks
-    }[name] * value
-    
+    const seconds = 1000;
+    const minutes = seconds * 60;
+    const hours = minutes * 60;
+    const days = hours * 24;
+    const weeks = days * 7;
+    return (
+      {
+        // convert into ms from these
+        seconds,
+        minutes,
+        hours,
+        days,
+        weeks,
+        // convert from ms to these
+        msSeconds: 1 / seconds,
+        msMinutes: 1 / minutes,
+        msHours: 1 / hours,
+        msDays: 1 / days,
+        msWeeks: 1 / weeks,
+      }[name] * value
+    );
   }
   // the cycle is for handling repeating time cycles
   // and resets the startedAt time every cyclems to kickoff
@@ -80,7 +81,6 @@ class TimeSimmer {
   set cycle(value) {
     this._cycle = value;
   }
-
 
   get kickoff() {
     return this._kickoff;
@@ -119,13 +119,13 @@ class TimeSimmer {
   }
 
   // when it started in real time
-  get realTimeStartedAt() { 
-    return this._realTimeStartedAt
+  get realTimeStartedAt() {
+    return this._realTimeStartedAt;
   }
-  
+
   // how long its been running for in real time
-  get realTimeElapsed() { 
-    return new Date().getTime() - this.realTimeStartedAt
+  get realTimeElapsed() {
+    return new Date().getTime() - this.realTimeStartedAt;
   }
 
   // get the current simmed time
@@ -148,8 +148,8 @@ class TimeSimmer {
     return new Date(this.time);
   }
 
-  get carryForwardOnCycle() { 
-    return this._carryForwardOnCycle
+  get carryForwardOnCycle() {
+    return this._carryForwardOnCycle;
   }
 
   // a shorthand to get all current interesting values
@@ -166,7 +166,7 @@ class TimeSimmer {
       allTime: this.allTime,
       realTimeStartedAt: this.realTimeStartedAt,
       realTimeElapsed: this.realTimeElapsed,
-      carryForwardOnCycle: this.carryForwardOnCycle
+      carryForwardOnCycle: this.carryForwardOnCycle,
     };
   }
 
@@ -177,7 +177,6 @@ class TimeSimmer {
 
   // this is called on every tick
   _tick() {
-    
     // the recycle has to happen after the tick event has been called and the usual things happen
     this.time += this.rate * this._tickRate;
     this._ticker++;
@@ -194,8 +193,9 @@ class TimeSimmer {
     // if we've hit cycle time, need to reset the timer and ticker
     // the cycle time might not reset to 0, because a partial time may have passed
     if (this.cycle && this.time - this.startedAt >= this.cycle) {
-      const cycleExtra = this.carryForwardOnCycle ?
-        this.time - this.startedAt - this.cycle : 0
+      const cycleExtra = this.carryForwardOnCycle
+        ? this.time - this.startedAt - this.cycle
+        : 0;
       this.time = this.kickoff + cycleExtra;
       this._ticker = 0;
       this._events.cycle.forEach((func) =>
